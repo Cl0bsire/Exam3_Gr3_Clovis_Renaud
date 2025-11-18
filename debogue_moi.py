@@ -9,20 +9,27 @@ def ajouter_apres_dernier(calendrier: dict, nom: str, duree: str) -> str:
     :return: une confirmation avec l'heure du nouveau rendez-vous
     """
 
-    dernier_rv = list(calendrier)[-1]
-    duree = datetime.datetime.strptime(duree, "%M")
-# Documentation Python https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
-    h = datetime.datetime.strptime(calendrier[dernier_rv][0], "%H:%M")
-    d = datetime.timedelta(minutes=int(calendrier[dernier_rv][1])+15)
+    if nom in calendrier:
+        return ("Nom déjà au calendrier")
+    else:
 
-    nouveau_debut = h + d
+        try:
+            dernier_rv = list(calendrier)[-1]
+            duree = datetime.datetime.strptime(duree, "%M")
+            # Documentation Python https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
+            h = datetime.datetime.strptime(calendrier[dernier_rv][0], "%H:%M")
+            d = datetime.timedelta(minutes=int(calendrier[dernier_rv][1])+15)
 
-    heure_str = nouveau_debut.strftime("%H:%M")
-    duree_str = duree.strftime("%M")
-    # Documentation Python https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
-    calendrier[nom] = (heure_str, duree_str)
+            nouveau_debut = h + d
 
-    return f"Rendez-vous confirmé à {heure_str}."
+            heure_str = nouveau_debut.strftime("%H:%M")
+            duree_str = duree.strftime("%M")
+            # Documentation Python https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
+            calendrier[nom] = (heure_str, duree_str)
+
+            return f"Rendez-vous confirmé à {heure_str}."
+        except:
+            return "Informations invalides"
 
 if __name__ == "__main__":
     rendez_vous = {

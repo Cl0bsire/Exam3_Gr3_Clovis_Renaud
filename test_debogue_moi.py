@@ -2,7 +2,9 @@ import pytest
 from debogue_moi import ajouter_apres_dernier as ajouter_apres_dernier
 
 @pytest.mark.parametrize("dict, nom, duree, resultat_attendu",[
-    ({"Amélie" : ("08:15","60"), "Hakim" : ("09:30","90"), "Bouchra" : ("11:15","60"), "Jacob" : ("13:45","30") }, 'Pierre', '45', 'Rendez-vous confirmé à 14:30.')
+    ({"Amélie" : ("08:15","60"), "Hakim" : ("09:30","90"), "Bouchra" : ("11:15","60"), "Jacob" : ("13:45","30") }, 'Pierre', '45', 'Rendez-vous confirmé à 14:30.'),
+    ({"Amélie" : ("08:15","60"), "Hakim" : ("09:30","90"), "Bouchra" : ("11:15","60"), "Jacob" : ("13:45","30") }, 'Pierre', 'mot', 'Informations invalides'),
+    ({"Amélie" : ("08:15","60"), "Hakim" : ("09:30","90"), "Bouchra" : ("11:15","60"), "Jacob" : ("13:45","30") }, 'Jacob', '45','Nom déjà au calendrier')
 ])
 
 def test_ajouter_apres_dernier_1(dict, nom, duree, resultat_attendu):
