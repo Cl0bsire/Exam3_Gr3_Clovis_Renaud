@@ -8,16 +8,18 @@ def ajouter_apres_dernier(calendrier: dict, nom: str, duree: str) -> str:
     :param duree: durée du nouveau rendez-vous
     :return: une confirmation avec l'heure du nouveau rendez-vous
     """
-    dernier_rv = calendrier[-1]
 
-    h = datetime.datetime.strptime(dernier_rv[0], "%h:%m")
-    d = datetime.timedelta(minutes=dernier_rv[1])
+    dernier_rv = list(calendrier)[-1]
+    duree = datetime.datetime.strptime(duree, "%M")
+# Documentation Python https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
+    h = datetime.datetime.strptime(calendrier[dernier_rv][0], "%H:%M")
+    d = datetime.timedelta(minutes=int(calendrier[dernier_rv][1])+15)
 
-    nouveau_debut = h + d + 15
+    nouveau_debut = h + d
 
-    heure_str = nouveau_debut.strftime("%h:%m")
-    duree_str = duree.strftime("%m")
-
+    heure_str = nouveau_debut.strftime("%H:%M")
+    duree_str = duree.strftime("%M")
+    # Documentation Python https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     calendrier[nom] = (heure_str, duree_str)
 
     return f"Rendez-vous confirmé à {heure_str}."
@@ -29,7 +31,6 @@ if __name__ == "__main__":
         "Bouchra" : ("11:15","60"),
         "Jacob" : ("13:45","30")
     }
-
     nom = input("Entrez le nom du patient : ")
     duree = input("Entrez la durée du rendez-vous, en minutes : ")
     print(ajouter_apres_dernier(rendez_vous, nom, duree))
